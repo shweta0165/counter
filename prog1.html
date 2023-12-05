@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Counter</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Times New Roman", sans-serif;
+}
+
+.container {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+span {
+  font-size: 100px;
+  padding: 10px;
+  color: grey;
+}
+
+.btn {
+  background: none;
+  outline: none;
+  border: 4px solid black;
+  padding: 10px;
+  border-radius: 10px;
+  margin: 5px;
+  font-family:bold;
+  cursor:pointer;
+}
+
+.up {
+  animation: up 0.5s ease;
+  position: relative;
+}
+
+.down {
+  animation: down 0.5s ease;
+  position: relative;
+}
+
+@keyframes up {
+  0% {
+    top: 0px;
+  }
+  50% {
+    top: -20px;
+  }
+  100% {
+    top: 0px;
+  }
+}
+
+@keyframes down {
+  0% {
+    top: 0px;
+  }
+  50% {
+    top: 20px;
+  }
+  100% {
+    top: 0px;
+  }
+}
+</style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Counter</h1>
+      <span id="counter">0</span>
+      <div class="btn-container">
+        <button class="btn increment">Increment</button>
+        <button class="btn reset">Reset</button>
+        <button class="btn decrement">Decrement</button>
+      </div>
+    </div>
+
+    <script>
+const counter = document.querySelector('#counter')
+const btns = document.querySelectorAll('.btn')
+
+let count = 0
+
+btns.forEach((btn) => {
+  btn.addEventListener('click', (e) => {
+    const styles = e.currentTarget.classList
+    const decButton = document.querySelector('.decrement')
+
+    if (styles.contains('increment')) {
+      count++
+
+      if (decButton.disabled) decButton.disabled = false
+
+      counter.classList.add('up')
+
+      setTimeout(() => {
+        counter.classList.remove('up')
+      }, 500)
+    } else if (styles.contains('decrement')) {
+      count--
+
+      if (count < 0) decButton.disabled = true
+
+      counter.classList.add('down')
+
+      setTimeout(() => {
+        counter.classList.remove('down')
+      }, 500)
+    } else {
+      if (decButton.disabled) decButton.disabled = false
+
+      count = 0
+    }
+
+    if (count > 0)
+      counter.style.color = 'blue'
+
+    if (count < 0)
+      counter.style.color = 'red'
+
+    if (count === 0)
+      counter.style.color = 'green'
+
+    counter.textContent = count
+  })
+})
+</script>
+  </body>
+</html>
